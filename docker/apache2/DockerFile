@@ -27,9 +27,8 @@ RUN apt-get update && \
 RUN apt-get update -y
 RUN rm -R /etc/apache2/sites-enabled/* /etc/apache2/sites-available/* /var/www/*
 
-EXPOSE 80 443
+
 COPY ./docker/apache2/conf/apache2.conf /etc/apache2/apache2.conf
-RUN ln -s /etc/apache2/sites-available/gb.highload.conf /etc/apache2/sites-enabled/
 
 COPY ./docker/apache2/conf/php.ini /etc/php/7.2/apache2/php.ini
 # COPY ./docker/webserver/dev/conf/php.ini /etc/php/7.2/cli/php.ini
