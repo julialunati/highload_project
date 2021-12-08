@@ -25,8 +25,12 @@ RUN apt-get update && \
     php-geoip php-memcache \
     cron systemd supervisor
 RUN apt-get update -y
-RUN rm -R /etc/apache2/sites-enabled/* /etc/apache2/sites-available/* /var/www/*
 
+RUN apt-get install php7.2-dev -y
+RUN pecl install xdebug
+RUN rm -R /etc/apache2/sites-enabled/* /etc/apache2/sites-available/* /var/www/*
+RUN mkdir "/var/log/xdebug"
+RUN chown -R www-data:www-data /var/log/xdebug
 
 COPY ./docker/apache2/conf/apache2.conf /etc/apache2/apache2.conf
 
