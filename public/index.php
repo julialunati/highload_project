@@ -13,5 +13,6 @@ $log->warning('Foo');
 $log->error('Bar');
 
 $log->warning('Memory '.memory_get_usage());
+$log->warning('Memory '.memory_get_peak_usage());
 
 echo phpinfo();
