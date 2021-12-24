@@ -13,6 +13,8 @@ services:
             - apache2
         depends_on:
             -  apache2
+        networks:
+            - network
 
     apache2:
         container_name: apache2
@@ -21,6 +23,9 @@ services:
             dockerfile: docker/apache2/DockerFile
         volumes:
             - ./:/var/www
+        networks:
+            - network
+
     percona:
         container_name: percona
         image: percona
@@ -30,6 +35,22 @@ services:
         environment:
             MYSQL_ROOT_PASSWORD: "root"
             MYSQL_DATABASE: laravel
+        networks:
+            - network
+
+    rabbitmq:
+        image: rabbitmq:3.9.11-management
+        container_name: rabbitmq
+        ports:
+            - 5672:5672
+            - 15672:15672
+        volumes:
+            - ./docker/rabbitmq/etc/:/etc/rabbitmq/
+            - ./docker/rabbitmq/data/:/var/lib/rabbitmq/
+            - ./docker/rabbitmq/logs/:/var/log/rabbitmq/
+        networks:
+            - network
+
     redis:
         container_name: db-redis
         build:
@@ -42,4 +63,7 @@ services:
     #        volumes:
     #            - ./docker/redis/data:/var/lib/redis
 
+networks:
+    network:
+        driver: bridge
 
